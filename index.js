@@ -23,7 +23,7 @@ app.use(errorController.get404);
 
 sequelize
   .sync()
-  .then((res) => {
+  .then(() => {
     app.listen(3000, () => {
       //   console.log(res);
       console.log("Server is running ");

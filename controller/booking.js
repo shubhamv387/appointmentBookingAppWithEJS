@@ -1,5 +1,4 @@
 const User = require("../model/users");
-const { use } = require("../router/booking");
 
 exports.getUsers = (req, res, next) => {
   //   console.log(req.body);
@@ -31,7 +30,7 @@ exports.postAddUser = (req, res, next) => {
     email: email,
     phone: phone.trim(),
   })
-    .then((result) => {
+    .then(() => {
       console.log("user created");
       res.render("add-user", {
         pageTitle: "All Users",
@@ -54,7 +53,6 @@ exports.getEditUser = (req, res, next) => {
       if (!user[0]) {
         return res.redirect("/");
       }
-
       res.render("add-user", {
         editing: editMode,
         pageTitle: "Edit User",
