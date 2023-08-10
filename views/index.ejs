@@ -1,0 +1,67 @@
+<!-- HEAD Include -->
+<%- include('./inc/head.ejs') %>
+<!-- HEADER Start -->
+<header>
+  <div class="m-auto p-2 bg-dark">
+    <h2 class="text-center text-white">Appointment Booking App</h2>
+  </div>
+</header>
+<!-- HEADER End -->
+<!-- MAIN Start -->
+<main>
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-10 col-lg-8 col-12 m-auto p-3">
+        <div class="mb-3">
+          <a href="/new-user" class="btn btn-outline-dark"
+            >New Users <i class="fas fa-user ms-1"></i
+          ></a>
+        </div>
+
+        <div class="user-list">
+          <% if(users.length > 0) { %>
+          <ul class="list-unstyled">
+            <% for (let user of users) { %>
+            <li
+              class="list-group-item list-group-item-warning border border-1 rounded-2 mb-2"
+            >
+              <div class="mb-2">
+                <span class="fw-bold">Name: </span> <%= user.name %>
+                <br />
+                <span class="fw-bold">Email: </span> <%= user.email %>
+                <br />
+                <span class="fw-bold">Phone: </span> <%= user.phone %>
+              </div>
+              <div>
+                <a
+                  href="/edit-user/<%= user.id %>?edit=true"
+                  class="btn btn-sm btn-success"
+                >
+                  EDIT
+                </a>
+
+                <form
+                  action="/delete-user"
+                  method="POST"
+                  class="d-inline-block"
+                >
+                  <button type="submit" class="btn btn-sm btn-danger">
+                    DELETE
+                  </button>
+                  <input type="hidden" name="userId" value="<%= user.id %>" />
+                </form>
+              </div>
+            </li>
+            <% } %>
+          </ul>
+          <% } else { %>
+          <h1>No Users Found!</h1>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- MAIN End -->
+<!-- FOOTER Include -->
+<%- include('./inc/end.ejs') %>

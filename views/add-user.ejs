@@ -1,0 +1,77 @@
+<!-- HEAD Include -->
+<%- include('./inc/head.ejs') %>
+<!-- HEADER Start -->
+<header>
+  <div class="m-auto p-2 bg-dark">
+    <h2 class="text-center text-white">Appointment Booking App</h2>
+  </div>
+</header>
+<!-- HEADER End -->
+<!-- MAIN Start -->
+<main>
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-10 col-lg-8 col-12 m-auto p-3">
+        <div class="mb-3">
+          <a href="/" class="btn btn-outline-dark"
+            >All Users <i class="fas fa-user ms-1"></i
+          ></a>
+        </div>
+        <!-- FORM Start -->
+        <form
+          action="/<% if (editing) { %>edit-user<% } else { %>add-user<% } %>"
+          method="POST"
+          class="form-control add-user p-4"
+        >
+          <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input
+              required
+              type="text"
+              id="name"
+              name="name"
+              value="<% if(editing) { %><%=user.name%><% } %>"
+              placeholder="Name..."
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input
+              required
+              type="email"
+              id="email"
+              name="email"
+              value="<% if(editing) { %><%=user.email%><% } %>"
+              placeholder="Email..."
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone:</label>
+            <input
+              required
+              type="text"
+              id="phone"
+              value="<% if(editing) { %><%=user.phone%><% } %>"
+              name="phone"
+              placeholder="Phone..."
+              class="form-control"
+            />
+          </div>
+          <% if (editing) { %><input
+            type="hidden"
+            name="userId"
+            value="<%=user.id%>"
+          /><% } %>
+          <button type="submit" class="btn btn-primary fw-bold">
+            <% if (editing) { %>Update User<% } else { %>Add User<% } %>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- MAIN End -->
+<!-- FOOTER Include -->
+<%- include('./inc/end.ejs') %>
