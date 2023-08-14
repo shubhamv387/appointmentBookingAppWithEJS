@@ -26,7 +26,7 @@ sequelize
   .then(() => {
     app.listen(3000, () => {
       //   console.log(res);
-      console.log("Server is running ");
+      console.log("Server is running on http://localhost:3000/");
     });
   })
   .catch((err) => console.log(err.message));

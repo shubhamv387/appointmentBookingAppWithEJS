@@ -46,6 +46,11 @@
               placeholder="Email..."
               class="form-control"
             />
+            <input
+              type="hidden"
+              name="oldEmail"
+              value="<% if(editing) { %><%=user.email%><% } %>"
+            />
           </div>
           <div class="mb-3">
             <label for="phone" class="form-label">Phone:</label>

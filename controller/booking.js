@@ -1,3 +1,4 @@
+const { Error } = require("sequelize");
 const User = require("../model/users");
 
 exports.getUsers = (req, res, next) => {
@@ -68,19 +69,52 @@ exports.postEditUser = (req, res, next) => {
   const updateName = req.body.name;
   const updateEmail = req.body.email;
   const updatePhone = req.body.phone;
-  User.update(
-    {
-      name: updateName.trim(),
-      email: updateEmail,
-      phone: updatePhone.trim(),
-    },
-    { where: { id: userId } }
-  )
-    .then((users) => {
-      console.log("user updated");
-      res.redirect("/");
-    })
-    .catch((err) => console.log(err.message));
+  const oldEmail = req.body.oldEmail;
+
+  if (updateEmail === oldEmail) {
+    User.update(
+      {
+        name: updateName.trim(),
+        email: updateEmail,
+        phone: updatePhone.trim(),
+      },
+      { where: { id: userId } }
+    )
+      .then(() => {
+        console.log("user updated");
+        res.redirect("/");
+      })
+      .catch((err) => console.log(err.message));
+  } else {
+    User.findAll({ where: { email: updateEmail } })
+      .then((user) => {
+        // console.log(user[0]);
+        if (user[0]) {
+          console.log("Email Already Exists!");
+          res
+            .status(400)
+            .send(
+              "<h1>Email Already Exists!</h1><p>Go back and change the email</p>"
+            );
+          // res.redirect(`/edit-user/${userId}?edit=true`);
+        } else {
+          User.update(
+            {
+              name: updateName.trim(),
+              email: updateEmail,
+              phone: updatePhone.trim(),
+            },
+            { where: { id: userId } }
+          )
+            .then(() => {
+              console.log("user updated");
+              res.redirect("/");
+            })
+            .catch((err) => console.log(err.message));
+        }
+      })
+      .catch((err) => console.log(err.message));
+  }
 };
 
 exports.deleteUser = (req, res, next) => {
